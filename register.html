@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postgraduate Registration</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #80deea, #4dd0e1);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle at bottom right, rgba(255, 204, 204, 0.3), rgba(204, 204, 255, 0));
+            transform: rotate(-30deg);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header img {
+            width: 120px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 32px;
+            color: #007bff;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+            color: #555;
+            position: relative;
+            z-index: 1;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ced4da;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background: #f8f9fa;
+            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+            outline: none;
+        }
+
+        .subcourse-label {
+            display: block;
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #e9ecef;
+            transition: background-color 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+
+        .subcourse-label:hover {
+            background-color: #dee2e6;
+            transform: translateY(-2px);
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s, transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%) rotate(45deg);
+            transition: all 0.3s ease-in-out;
+            z-index: -1;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #218838, #28a745);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+        }
+
+        button:hover::before {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #successMessage {
+            color: #28a745;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="https://upload.wikimedia.org/wikipedia/en/6/6c/South_Eastern_University_of_Sri_Lanka_logo.png" alt="Logo">
+        </header>
+        <h2>Postgraduate Registration Application</h2>
+        <form id="postgraduateForm">
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nic">NIC Number:</label>
+                <input type="text" id="nic" name="nic" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nicFront">Upload NIC Front Image:</label>
+                <input type="file" id="nicFront" name="nicFront" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nicBack">Upload NIC Back Image:</label>
+                <input type="file" id="nicBack" name="nicBack" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="qualification">Highest Educational Qualification:</label>
+                <input type="text" id="qualification" name="qualification" required>
+            </div>
+
+            <div class="form-group">
+                <label for="university">Previous University/Institution:</label>
+                <input type="text" id="university" name="university" required>
+            </div>
+
+            <div class="form-group">
+                <label for="degree">Degree Obtained:</label>
+                <input type="text" id="degree" name="degree" required>
+            </div>
+
+            <div class="form-group">
+                <label for="yearGraduated">Year Graduated:</label>
+                <input type="number" id="yearGraduated" name="yearGraduated" required>
+            </div>
+
+            <div class="form-group">
+                <label for="workExperience">Work Experience (Years):</label>
+                <input type="number" id="workExperience" name="workExperience">
+            </div>
+
+            <div class="form-group">
+                <label for="skills">Relevant Skills:</label>
+                <textarea id="skills" name="skills" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="interests">Research Interests:</label>
+                <textarea id="interests" name="interests" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="mainCourse">Select Main Course:</label>
+                <label class="subcourse-label">
+                    <input type="radio" name="mainCourse" value="postgraduateDiploma" onclick="showSubCourses('postgraduateDiploma')">
+                    Postgraduate Diploma
+                </label>
+                <label class="subcourse-label">
+                    <input type="radio" name="mainCourse" value="mastersPrograms" onclick="showSubCourses('mastersPrograms')">
+                    Masters Programs
+                </label>
+                <label class="subcourse-label">
+                    <input type="radio" name="mainCourse" value="mphilPhdPrograms" onclick="showSubCourses('mphilPhdPrograms')">
+                    M.Phil/Ph.D. Programs
+                </label>
+            </div>
+
+            <div id="subCoursesContainer" class="form-group"></div>
+
+            <div class="form-group">
+                <label for="reference">Reference (Name and Contact):</label>
+                <input type="text" id="reference" name="reference" required>
+            </div>
+
+            <div class="form-group">
+                <label for="motivation">Statement of Purpose:</label>
+                <textarea id="motivation" name="motivation" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="attachments">Upload Other Documents:</label>
+                <input type="file" id="attachments" name="attachments" multiple>
+            </div>
+
+            <div class="form-group">
+                <label for="terms">Agree to Terms and Conditions:</label>
+                <label>
+                    <input type="checkbox" id="terms" name="terms" required>
+                    I agree to the terms and conditions
+                </label>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+        <p id="successMessage" class="hidden">Successfully registered! We will reply in 2-3 days.</p>
+    </div>
+
+    <script>
+        const subCourses = {
+            postgraduateDiploma: [
+                'Postgraduate Diploma in Information Technology',
+                'Postgraduate Diploma in Environmental Science',
+                'Postgraduate Diploma in Management'
+            ],
+            mastersPrograms: [
+                'Masters in Computer Science',
+                'Masters in Business Administration',
+                'Masters in Applied Physics'
+            ],
+            mphilPhdPrograms: [
+                'M.Phil in Engineering',
+                'Ph.D. in Humanities',
+                'Ph.D. in Biological Sciences'
+            ]
+        };
+
+        function showSubCourses(course) {
+            const container = document.getElementById('subCoursesContainer');
+            container.innerHTML = '';
+
+            subCourses[course].forEach(subCourse => {
+                const label = document.createElement('label');
+                label.className = 'subcourse-label';
+                label.innerHTML = `
+                    <input type="radio" name="subCourse" value="${subCourse}" required>
+                    ${subCourse}
+                `;
+                container.appendChild(label);
+            });
+        }
+
+        document.getElementById("postgraduateForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            if (confirm("Confirm Registration\nAre you sure you want to register for this course?\n\nYes No")) {
+                let formData = new FormData(this);
+
+                fetch('submit.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "register.html";
+                    } else {
+                        alert('Failed to submit form');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to submit form');
+                });
+            } else {
+                alert('Registration canceled');
+            }
+        });
+    </script>
+</body>
+</html>
